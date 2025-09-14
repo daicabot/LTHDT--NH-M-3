@@ -1,79 +1,102 @@
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
-public class BTap {
+public class Main {
     public static void main(String[] args) {
-        try (Scanner sc = new Scanner(System.in)) {
-            System.out.println("===== MENU BÀI TẬP =====");
-            System.out.println("1. Hello + Tên");
-            System.out.println("2. Thông tin cá nhân");
-            System.out.println("3. Tính toán với 2 số nguyên");
-            System.out.println("4. Tính lãi suất ngân hàng");
-            System.out.print("Chọn bài tập (1-4): ");
-            int choice = sc.nextInt();
-            sc.nextLine();
-            
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("===== MENU BAI TAP JAVA =====");
+            System.out.println("1. Nhap ten va in ra 'Hello + Ten'");
+            System.out.println("2. Khai bao bien luu thong tin ca nhan");
+            System.out.println("3. Nhap 2 so nguyen va tinh toan");
+            System.out.println("4. Tinh lai suat ngan hang");
+            System.out.println("0. Thoat");
+            System.out.print("Chon bai tap (0-4): ");
+            choice = sc.nextInt();
+            sc.nextLine(); 
+
             switch (choice) {
-                case 1 -> bai1(sc);
-                case 2 -> bai2();
-                case 3 -> bai3(sc);
-                case 4 -> bai4(sc);
-                default -> System.out.println("Lựa chọn không hợp lệ!");
+                case 1:
+                    bai1(sc);
+                    break;
+                case 2:
+                    bai2();
+                    break;
+                case 3:
+                    bai3(sc);
+                    break;
+                case 4:
+                    bai4(sc);
+                    break;
+                case 0:
+                    System.out.println("Ket thuc chuong trinh.");
+                    break;
+                default:
+                    System.out.println("Lua chon khong hop le, vui long nhap lai!");
             }
-        }
+            System.out.println();
+        } while (choice != 0);
+
+        sc.close();
     }
 
-    // Bài 1
+    // Bai 1
     public static void bai1(Scanner sc) {
-        System.out.print("Nhập tên của bạn: ");
+        System.out.print("Nhap ten cua ban: ");
         String name = sc.nextLine();
         System.out.println("Hello " + name);
     }
 
-    // Bài 2
+    // Bai 2
     public static void bai2() {
-        String ten = "Nguyen Van A";
-        int tuoi = 20;
-        double chieuCao = 1.75;
-        char gioiTinh = 'M';
-        boolean thichLapTrinh = true;
+        String name = "Khanh";
+        int age = 19;
+        double height = 1.78;
+        boolean likesProgramming = true;
+        char gender = 'M';
 
-        System.out.println("Tên: " + ten);
-        System.out.println("Tuổi: " + tuoi);
-        System.out.println("Chiều cao: " + chieuCao + "m");
-        System.out.println("Giới tính: " + gioiTinh);
-        System.out.println("Có thích lập trình không? " + thichLapTrinh);
+        System.out.println("Ten: " + name);
+        System.out.println("Tuoi: " + age);
+        System.out.println("Chieu cao: " + height + "m");
+        System.out.println("Gioi tinh: " + gender);
+        System.out.println("Co thich lap trinh khong? " + likesProgramming);
     }
 
-    // Bài 3
+    // Bai 3
     public static void bai3(Scanner sc) {
-        System.out.print("Nhập số nguyên thứ nhất: ");
+        System.out.print("Nhap so nguyen thu nhat: ");
         int a = sc.nextInt();
-        System.out.print("Nhập số nguyên thứ hai: ");
+        System.out.print("Nhap so nguyen thu hai: ");
         int b = sc.nextInt();
 
-        System.out.println("Tổng: " + (a + b));
-        System.out.println("Hiệu: " + (a - b));
-        System.out.println("Tích: " + (a * b));
-        System.out.println("Thương: " + (a / b));
-        System.out.println("Phần dư: " + (a % b));
+        System.out.println("Tong: " + (a + b));
+        System.out.println("Hieu: " + (a - b));
+        System.out.println("Tich: " + (a * b));
+        if (b != 0) {
+            System.out.println("Thuong: " + (a / b));
+            System.out.println("Phan du: " + (a % b));
+        } else {
+            System.out.println("Khong the chia cho 0!");
+        }
     }
 
-    // Bài 4
+    // Bai 4
     public static void bai4(Scanner sc) {
-        System.out.print("Nhập số tiền gửi (VNĐ): ");
+        DecimalFormat df = new DecimalFormat("#,###"); 
+
+        System.out.print("Nhap so tien gui (VND): ");
         double tienGui = sc.nextDouble();
-
-        System.out.print("Nhập lãi suất hàng năm (%): ");
+        System.out.print("Nhap lai suat hang nam (%): ");
         double laiSuatNam = sc.nextDouble();
-
-        System.out.print("Nhập số tháng gửi: ");
+        System.out.print("Nhap so thang gui: ");
         int soThang = sc.nextInt();
 
-        double laiSuatThang = laiSuatNam / 12 / 100;
-        double tienCuoiKy = tienGui * Math.pow(1 + laiSuatThang, soThang);
-        double tienLai = tienCuoiKy - tienGui;
+        double tienLai = tienGui * (laiSuatNam / 100) * (soThang / 12.0);
+        double tongTien = tienGui + tienLai;
 
-        System.out.println("Tiền lãi: " + tienLai);
-        System.out.println("Tổng tiền cuối kỳ: " + tienCuoiKy);
+        System.out.println("Tien lai: " + df.format(tienLai) + " VND");
+        System.out.println("Tong tien cuoi ky: " + df.format(tongTien) + " VND");
     }
 }
